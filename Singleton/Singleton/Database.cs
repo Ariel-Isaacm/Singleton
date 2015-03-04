@@ -9,27 +9,29 @@ namespace Singleton
 {
     class Database
     {
-        private Database db;
+        private static Database db;
         private static Object thisLock =new Object();
         public string cadenaConexion;
         SqlConnection con;
         private Database()
         {
-            cadenaConexion = "SERVER=localhost,1433;DATABASE=bd;User ID=Alien;Password=Pringles92;Trusted_Connection=False";
+            cadenaConexion = "SERVER=server;DATABASE=bd;User ID=User;Password=Passwrd;Trusted_Connection=False";
             con = new SqlConnection(cadenaConexion);
             
         }
 
-        public Database getDatabase()
+        public static Database getDatabase()
         {
             lock (thisLock)
             {
                 if (db == null)
                 {
-                    return new Database();
+                    Console.WriteLine("La referencia no existe, la crearé y la regresaré");
+                    return db=new Database();
                 }
                 else
                 {
+                    Console.WriteLine("Ya existe la referencia, te la regreso");
                     return db;
                 }
             }
